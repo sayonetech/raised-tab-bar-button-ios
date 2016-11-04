@@ -1,0 +1,83 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1504\cocoasubrtf600
+{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red0\green68\blue254;\red170\green13\blue145;
+\red92\green38\blue153;\red63\green110\blue116;\red46\green13\blue110;\red196\green26\blue22;\red0\green116\blue0;
+\red38\green71\blue75;\red74\green0\blue230;\red0\green61\blue204;\red28\green0\blue207;}
+{\*\expandedcolortbl;\csgray\c100000;\csgenericrgb\c0\c0\c0;\csgenericrgb\c0\c26667\c99608;\csgenericrgb\c66500\c5200\c56900;
+\csgenericrgb\c35900\c14900\c60100;\csgenericrgb\c24700\c43100\c45600;\csgenericrgb\c18100\c5200\c43100;\csgenericrgb\c77000\c10200\c8600;\csgenericrgb\c0\c45600\c0;
+\csgenericrgb\c14900\c27800\c29400;\csgenericrgb\c29020\c0\c90196;\csgenericrgb\c0\c23922\c80000;\csgenericrgb\c11000\c0\c81000;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww23080\viewh10720\viewkind0
+\deftab543
+\pard\tx543\pardeftab543\pardirnatural\partightenfactor0
+
+\f0\fs22 \cf2 \CocoaLigature0     \
+\cf3 In AppDelegate,\cf2 \
+\
+\cf4 @property\cf2  (\cf4 nonatomic\cf2 , \cf4 strong\cf2 ) \cf5 UITabBarController\cf2  *homeBarController;\
+\
+- (\cf5 UITabBarController\cf2  *) homeBarController \{\
+    \cf4 if\cf2  (\cf6 _homeBarController\cf2  != \cf4 nil\cf2 ) \{\
+        \cf4 return\cf2  \cf6 _homeBarController\cf2 ;\
+    \}\
+    \
+    \cf5 UIStoryboard\cf2  *mainStoryBoard = [\cf5 UIStoryboard\cf2  \cf7 storyboardWithName\cf2 :\cf8 @"Main"\cf2  \cf7 bundle\cf2 :\cf4 nil\cf2 ];\
+    \cf8 ViewController1\cf2  *tab1 = [mainStoryBoard \cf7 instantiateViewControllerWithIdentifier\cf2 :\cf8 @\'93ViewController1\'94\cf2 ];\
+    \
+    \cf8 ViewController2\cf2  *tab2 = [mainStoryBoard \cf7 instantiateViewControllerWithIdentifier\cf2 :\cf8 @"ViewController2\'94\cf2 ];\
+    \
+    \cf8 ViewController3\cf2  *tab3 = [mainStoryBoard \cf7 instantiateViewControllerWithIdentifier\cf2 :\cf8 @"ViewController3\'94\cf2 ];\
+    \
+    \cf8 ViewController4\cf2  *tab4 = [mainStoryBoard \cf7 instantiateViewControllerWithIdentifier\cf2 :\cf8 @"ViewController4\'94\cf2 ];\
+    \
+    \cf8 ViewController5\cf2  *tab5 = [mainStoryBoard \cf7 instantiateViewControllerWithIdentifier\cf2 :\cf8 @"ViewController5\'94\cf2 ];\
+    \
+    \
+    \cf6 _homeBarController\cf2  = [[\cf5 UITabBarController\cf2  \cf7 alloc\cf2 ] \cf7 init\cf2 ];\
+    [\cf6 _homeBarController\cf2 .\cf5 tabBar\cf2  \cf7 setTintColor\cf2 :[\cf5 UIColor\cf2  \cf7 redColor\cf2 ]];\
+    [\cf6 _homeBarController\cf2 .\cf5 tabBar\cf2  \cf7 setBarTintColor\cf2 :[\cf5 UIColor\cf2  \cf7 whiteColor\cf2 ]];\
+    \cf6 _homeBarController\cf2 .\cf5 viewControllers\cf2  = [\cf5 NSArray\cf2  \cf7 arrayWithObjects\cf2 :tab1,tab2,tab3,tab4,tab5, \cf4 nil\cf2 ];\
+    \
+    \cf9 // Our uibutton subclass that will be placed over the centre button in the\cf2 \
+    \cf9 // tabbar.\cf2 \
+    \cf6 RaisedCenterButton\cf2  *button = [\cf6 RaisedCenterButton\cf2  \cf10 buttonWithImage\cf2 :[\cf5 UIImage\cf2  \cf7 imageNamed\cf2 :\cf8 @"camera_MVT"\cf2 ] \cf10 forTabBarController\cf2 :\cf6 _homeBarController\cf2 ];\
+    [\cf6 _homeBarController\cf2 .\cf5 view\cf2  \cf7 addSubview\cf2 :button];\
+    \
+    \cf4 return\cf2  \cf6 _homeBarController\cf2 ;\
+\}\
+\
+\
+\
+\cf11 In the Viewcontoller from which we will reach the tab bar view, add \cf2 \
+\
+\cf6 AppDelegate\cf2  *appDelegate = (\cf6 AppDelegate\cf2  *)[\cf5 UIApplication\cf2  \cf7 sharedApplication\cf2 ].\cf5 delegate\cf2 ;\
+    \cf5 NSMutableArray\cf2  *navigationStack = [[\cf5 NSMutableArray\cf2  \cf7 alloc\cf2 ] \cf7 initWithArray\cf2 : \cf4 self\cf2 .\cf5 navigationController\cf2 .\cf5 viewControllers\cf2 ];\
+    [navigationStack \cf7 removeAllObjects\cf2 ];\
+    [navigationStack \cf7 addObject\cf2 :appDelegate.\cf6 homeBarController\cf2 ];\
+    [\cf4 self\cf2 .\cf5 navigationController\cf2  \cf7 setViewControllers\cf2 :navigationStack \cf7 animated\cf2 :\cf4 YES\cf2 ];\
+\
+\
+\
+\cf12 If you want to set the tab bar Visible after hiding in any view controller, use\cf2 \
+\
+- (\cf4 void\cf2 )setTabBarVisible:(\cf4 BOOL\cf2 )visible inView:(\cf5 UIView\cf2  *)view \{\
+    \cf4 if\cf2  ([\cf4 self\cf2  \cf10 tabBarIsVisibleinView\cf2 :view] == visible) \cf4 return\cf2 ;\
+    \cf5 CGRect\cf2  tabFrame = \cf4 self\cf2 .\cf6 homeBarController\cf2 .\cf5 tabBar\cf2 .\cf5 frame\cf2 ;\
+    \cf5 CGRect\cf2  camFrame = \cf4 self\cf2 .\cf6 camButton\cf2 .\cf5 frame\cf2 ;\
+    \cf5 CGFloat\cf2  height = \cf4 self\cf2 .\cf6 camButton\cf2 .\cf5 frame\cf2 .\cf5 size\cf2 .\cf5 height\cf2 ;\
+    \cf5 CGFloat\cf2  offsetY;\
+    \cf4 if\cf2  ([\cf4 self\cf2  \cf10 tabBarIsVisibleinView\cf2 :view]) \{\
+        offsetY = height;\
+    \}\cf4 else\cf2 \{\
+        offsetY = -height;\
+    \}\
+    [\cf5 UIView\cf2  \cf7 animateWithDuration\cf2 :\cf13 .2\cf2  \cf7 animations\cf2 :^\{\
+        \cf4 self\cf2 .\cf6 homeBarController\cf2 .\cf5 tabBar\cf2 .\cf5 frame\cf2  = \cf7 CGRectOffset\cf2 (tabFrame, \cf13 0\cf2 , offsetY);\
+        \cf4 self\cf2 .\cf6 camButton\cf2 .\cf5 frame\cf2  = \cf7 CGRectOffset\cf2 (camFrame, \cf13 0\cf2 , offsetY);\
+    \} \cf7 completion\cf2 :\cf4 nil\cf2 ];\
+\}\
+\
+\pard\tx543\pardeftab543\pardirnatural\partightenfactor0
+\cf9 // know the current state\cf2 \
+- (\cf4 BOOL\cf2 )tabBarIsVisibleinView:(\cf5 UIView\cf2  *)view \{\
+    \cf4 return\cf2  \cf4 self\cf2 .\cf6 homeBarController\cf2 .\cf5 tabBar\cf2 .\cf5 frame\cf2 .\cf5 origin\cf2 .\cf5 y\cf2  < \cf7 CGRectGetMaxY\cf2 (view.\cf5 frame\cf2 );\
+\}}
